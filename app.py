@@ -15,17 +15,17 @@ collection = db.collection
 @app.route("/")
 def index():
     # Find Mongo data
-    listings = collection.find_one()
+    data = collection.find_one()
     return render_template("index.html", 
-                           collections=listings)
+                           data=data)
 
 # Scrape route
 @app.route("/scrape")
 def scraper():
     # Run the scrape function
-    listings_data = scrape()
+    data = scrape()
     # Update the Mongo database
-    collection.update({}, listings_data, upsert=True)
+    collection.update({}, data, upsert=True)
     return redirect("/", code=302)
 
 # Run application
