@@ -1,4 +1,4 @@
-from bs4 import BeautifulSoup as bs
+from bs4 import BeautifulSoup
 import requests
 
 def scrape(url):
@@ -13,7 +13,7 @@ def scrape(url):
     
     """
     response = requests.get(url)
-    soup = bs(response.content, "lxml")
+    soup = BeautifulSoup(response.content, "lxml")
 
     # Titles
     titles = [title.text 
