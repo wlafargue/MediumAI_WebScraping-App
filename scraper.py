@@ -30,12 +30,24 @@ def scrape(url):
     # Authors' photo
     photos = [img['src'] for img in soup.find_all('img', "l hv bx hq hr ec")]
 
+    # Original webpage of articles
+    hrefs = [article.a['href'].split('?')[0] for article in soup.find_all('div', 'lc ld le lf lg l')]
+
+    # Minutes for reading
+    min_read = [int(span.text.split()[0]) for article in soup.find_all('div', 'jg jh ji jj jk ab q') for span in article.findAll('span') if 'read' in span.contents[0]]
+
+    # Published date
+    date = [span.text for article in soup.find_all('div', 'jg jh ji jj jk ab q') for span in article.children if ' read' not in span.text and len(span.text)> 2]
+
     data = {
         'titles' : titles,
         'texts' : texts,
         'pictures' : pictures,
         'authors' : authors,
         'photos' : photos,
+        'hrefs': hrefs,
+        'min_read': min_read,
+        'date': date
     }
 
     return data
