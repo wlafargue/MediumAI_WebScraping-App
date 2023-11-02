@@ -1,22 +1,24 @@
 #!/usr/bin/env python
 from flask import Flask, render_template, redirect
-from pymongo import MongoClient
-from utils import scrape
+from scripts import Database, scrape
 
 # Initialize Flask
 app = Flask(__name__)
 
 # MongoDB server
-client = MongoClient("localhost", 27017)
-db = client.flask_db
-collection = db.collection
+db = Database("localhost", 27017, "my_db")
+col = db.init_collection("my_col")
+
+def close_app():
+    """Close connections to Mongo database."""
+    db.close()
 
 # Default route
 @app.route("/")
 def index():
     # Find Mongo data
-    data = collection.find_one()
-    return render_template("index.html", 
+    data = db.find_one(col)
+    return render_template("templates/index.html", 
                            data=data)
 
 # Scrape route
@@ -25,9 +27,5 @@ def scraper():
     # Run the scrape function
     data = scrape()
     # Update the Mongo database
-    collection.update({}, data, upsert=True)
+    db.update_many(col, {}, data, upsert=True)
     return redirect("/", code=302)
-
-# Run application
-if __name__ == "__main__":
-    app.run(debug=True)

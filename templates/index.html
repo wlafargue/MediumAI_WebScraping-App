@@ -1,15 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+
+<!-- Headers -->
 <head>
- <meta charset="UTF-8">
- <title>News Headlines</title>
+    <meta charset="UTF-8">
+    <title>News Headlines</title>
 </head>
+
+<!-- Headers -->
 <body>
- <h1>Latest News Headlines</h1>
- <ul>
- {% for title in data.titles %}
- <li>{{ title }}</li>
- {% endfor %}
- </ul>
+    <h1>Latest News Headlines</h1>
+    <ul>
+        {% for title in data.titles %}
+            <li>{{ title }}</li>
+        {% endfor %}
+    </ul>
 </body>
+
 </html>
