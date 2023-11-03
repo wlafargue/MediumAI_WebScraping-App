@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-from scripts import app
+from src import app
 
 # Run application
 if __name__ == "__main__":

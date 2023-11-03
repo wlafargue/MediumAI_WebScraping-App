@@ -27,7 +27,7 @@ class Database:
         self.db_name = database
 
         self.client = MongoClient(self.host, self.port)
-        self.db = self._client[self.db_name]
+        self.db = self.client[self.db_name]
     
     def init_collection(self, collection):
         """ Initialize a collection to the existing database.
@@ -38,30 +38,16 @@ class Database:
         Returns:
             Collection object
         """
-        return self.db[self.collection]
+        return self.db[collection]
     
-    def find_one(self, collection, query):
+    def find(self, collection, query={}):
         """ Return a single document.
 
         Args:
             collection (str): name of collection
-            query (dict): querying a specific element to match
         
         Returns:
             Result of query
         """
-        return self.db[collection].find_one(query)
+        return self.db[collection].find(query)
     
-    def update_many(self, collection, query, values, upsert=True):
-        """ Return a single document.
-
-        Args:
-            collection (str): name of collection
-            query (dict): querying a specific element
-            values (dict): new values
-            upsert (bool): if True, update and insert values; default=True
-
-        Returns:
-            Result of query
-        """
-        return self.db[collection].update_many(query, values, upsert=upsert)

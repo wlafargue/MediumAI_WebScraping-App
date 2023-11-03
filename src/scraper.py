@@ -51,32 +51,34 @@ def scrape(url):
         if len(a) > 0:
             h = a[0].find('h2')
             if h is not None:
-                hrefs.append('https://medium.com'+a[0]['href'])
+                hrefs.append('https://medium.com'+a[0]['href'].split('?')[0])
 
     # Minutes for reading
-    min_read = []
+    min_reads = []
     for article in soup.find_all('div', 'jg jh ji jj jk ab q'):
         for span in article.findAll('span'):
             if 'read' in span.text:
-                min_read.append(int(span.text.split()[0]))
+                min_reads.append(int(span.text.split()[0]))
                 
 
     # Published date
-    date = []
+    dates = []
     for article in soup.find_all('div', 'jg jh ji jj jk ab q'):
         for span in article.children:
             if ' read' not in span.text and len(span.text)> 2:
-                date.append(span.text)
+                dates.append(span.text)
 
-    data = {
-        'titles' : titles,
-        'texts' : texts,
-        'pictures' : pictures,
-        'authors' : authors,
-        'photos' : photos,
-        'hrefs': hrefs,
-        'min_read': min_read,
-        'date': date
-    }
+    data = list()
+    for (title, text, picture, author, photo, href, min_read, date) in zip(titles, texts, pictures, authors, photos, hrefs, min_reads, dates):
+        data.append({
+            'title': title,
+            'text': text,
+            'picture': picture,
+            'author': author,
+            'photo': photo,
+            'href': href,
+            'min_read': min_read,
+            'date': date
+        })
 
     return data

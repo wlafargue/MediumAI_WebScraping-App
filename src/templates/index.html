@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>FlaskApp</title>
+        <style>
+            /* Define CSS for the layout */
+        .summary-box {
+            background-color: #f0f0f0;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px;
+            width: 600px;
+        }
+
+        .title {
+            font-weight: bold;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .author-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .author-image {
+            max-width: 100px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .author-name {
+            font-weight: bold;
+        }
+
+        .publication-date {
+            margin-left: 20px;
+        }
+
+        .time-to-read {
+            margin-left: 10px;
+        }
+
+        .content {
+            display: flex;
+        }
+
+        .text {
+            flex: 1;
+        }
+
+        .image {
+            flex: 1;
+        }
+
+        .button {
+            text-align: center;
+        }
+        </style>
+    </head>
+<body>
+    <div>
+        <h1>Medium.com - Recommended stories in "Artificial Intelligence"</h1>
+        <div class="button">
+            <a href="/scrape" role=""button>
+                Scrape New Data
+            </a>
+        </div>
+    </div>
+   
+    {% for article in data %}
+    <div class="summary-box">
+        <a class="title" href={{ article.href }}> {{ article.title }} </a>
+        <div class="author-info">
+            <img class="author-image" src={{ article.photo }} alt="Author">
+            <span class="author-name">{{ article.author }}</span>
+            <div> | </div> 
+            <span class="publication-date">Published {{ article.date }}</span>
+            <div> | </div>  
+            <span class="time-to-read">{{ article.min_read }} min read</span>
+        </div>
+        <div class="content">
+            <div class="text">
+                <p>{{ article.text }}</p>
+            </div>
+            <div class="image">
+                <img src={{ article.picture }} alt="Article Image">
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</body>
+
+</html>
